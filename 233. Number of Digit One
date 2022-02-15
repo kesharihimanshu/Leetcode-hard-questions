@@ -1,0 +1,26 @@
+class Solution {
+public:
+    // Here we use recursion for solving the given question 
+    // we split the number in the power of decimal representation and for fist digit 
+    //we just find out the number of ones contain by this number.
+    int countDigitOne(int n) {
+        if(n==0)
+            return 0;
+        if(n<=9)
+            return 1;
+        int m=n,pow=1;
+        while(m>=10)
+        {
+            m=m/10;
+            pow=pow*10;
+        }
+        int fst=m,last=n-fst*pow;
+        return ((fst==1)?last+1:pow)+ countDigitOne(last)+ fst* countDigitOne(pow-1);
+    }
+};
+
+
+
+
+
+
