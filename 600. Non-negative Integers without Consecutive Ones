@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int dp[31][2][2];
+    int findIntegers(int n) {
+        string s="";
+        while(n>0)
+        {
+         if(n%2)
+             s.push_back('1');
+            else
+                s.push_back('0');
+            n=n/2;
+        }
+        reverse(s.begin(),s.end());
+        memset(dp,-1,sizeof(dp));
+        return solve(s,s.size(),0,1);
+    }
+    int solve(string s,int n,int prev,int tight)
+    {
+       if(n==0)
+           return 1;
+        if(dp[n][prev][tight]!=-1)
+            return dp[n][prev][tight];
+        int ub=tight?s[s.size()-n]-'0':1;
+        int ans=0;
+        for(int i=0;i<=ub;i++)
+        {
+            if(i==prev&& i==1)
+                continue;
+            ans+=solve(s,n-1,i,tight&(i==ub));
+        }
+        dp[n][prev][tight]=ans;
+        return ans;
+    }
+};
